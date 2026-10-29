@@ -57,6 +57,11 @@ location:
   timezone: "America/New_York"      # also the routine's run date
   visa_status: "No sponsorship needed"
 
+# Google Drive folder for the resumes the routine builds. Make the folder, copy the id from its URL.
+drive:
+  resume_folder_name: "RoleCall Resumes"
+  resume_folder_id: ""
+
 # Routine budget. SETUP.md explains the Pro-plan settings.
 routine:
   model_note: "Sonnet on a Pro plan, Opus on Max"
