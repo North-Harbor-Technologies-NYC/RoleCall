@@ -58,7 +58,8 @@ export function locationShort(l: string | null | undefined): string {
   if (!l) return '';
   const s = l.replace(/\(.*?\)/g, '').replace(/,\s*(USA|United States|US)$/i, '').trim();
   const hybrid = /hybrid/i.test(l) ? ', hybrid' : /remote/i.test(l) ? ', remote' : /on[- ]?site|in office|days in/i.test(l) ? ', on site' : '';
-  return (s.length > 34 ? s.slice(0, 32).replace(/[,\s]+$/, '') : s) + hybrid;
+  const short = s.length > 34 ? s.slice(0, 32).replace(/[,\s]+$/, '') : s;
+  return !hybrid || new RegExp(hybrid.replace(', ', ''), 'i').test(short) ? short : short + hybrid;
 }
 export function metaLine(job: Pick<Job, 'company' | 'location' | 'comp'>): string {
   return [job.company, locationShort(job.location), compShort(job.comp)].filter(Boolean).join(' · ');

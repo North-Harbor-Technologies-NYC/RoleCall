@@ -28,10 +28,11 @@ node templates/build_digest.cjs runs/YYYY-MM-DD/digest.json runs/YYYY-MM-DD/dige
 It prints the subject line (`Jobs <date>: <n> new matches, <m> to verify, <k> follow-ups`) and refuses em dashes. Never hand-write HTML; if the layout needs a change, change the builder in a session with the owner, not in a run.
 
 Field rules:
-- `top` is 4.0 and up, `optional` is 3.5 to 3.9, both sorted by score. Each role: `why` is one or two sentences on what decided the score; `note` (optional) is anything the owner must do before using the report, such as placeholders or unconfirmed dates; `apply_url` is the canonical posting, never the alert; `report` is the repo path (`reports/YYYY-MM-DD-slug.md`) and the builder turns it into a GitHub link on the run branch; `source` names the feed or board.
+- `top` is 4.0 and up, `optional` is 3.5 to 3.9, both sorted by score. Each role carries `id` (the dashboard row id), `fit`, `watch`, and `checks` exactly as posted in `rolecall-jobs.json`, so the email and the dashboard say the same thing; `why` is one or two sentences on what decided the score (kept for older builders); `note` (optional) is anything the owner must do before using the report, such as placeholders or unconfirmed dates; `apply_url` is the canonical posting, never the alert; `report` is the repo path (`reports/YYYY-MM-DD-slug.md`) and the builder turns it into a GitHub link on the run branch; `source` names the feed or board.
 - `headline` is one sentence: what to do today.
 - `failures` holds connector or step failures only; the builder prints them at the top. Everything else goes in `system`, one line each, and `system` stays under eight lines. Roles below 3.5 appear only as counts with the top three blocker reasons.
 - `pipeline.note` carries the stale explanation and any Apply row waiting on the owner.
+- `run` is `{threads, boards, scored, kept}` from `summary.json` (inbox threads in the window, feed sources, roles scored, roles at 3.5 and up) for the closing line.
 - `appendix.rows` is every new item from `passed.json` (scored first by score, then deferred by tier), with `url` when known; `appendix.new`, `carried`, and `duplicates` are counts. When `dashboard_url` is set, the builder prints a link instead of the table; until the dashboard exists, the table stays in the email.
 - `drafts` holds outreach and follow-up drafts as `{title, text}`; they print at the very bottom.
 
