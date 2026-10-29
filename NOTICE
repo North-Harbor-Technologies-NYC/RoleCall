@@ -1,0 +1,8 @@
+RoleCall
+Copyright (c) 2026 North Harbor Technologies
+Licensed under the MIT License (see LICENSE).
+
+Portions derive from santifer/career-ops (https://github.com/santifer/career-ops):
+the rubric structure, the state machine (rubric/states.yml), and
+portals/providers/ashby.mjs, greenhouse.mjs, lever.mjs, _http.mjs, _types.js.
+Copyright (c) 2026 Santiago Fernández de Valderrama, MIT License.

@@ -52,4 +52,4 @@ Follow [SETUP.md](SETUP.md). Budget an hour: fork, fill in `profile/`, deploy th
 
 ## Provenance
 
-The rubric structure, state machine, and the Ashby, Greenhouse, and Lever clients derive from [santifer/career-ops](https://github.com/santifer/career-ops) (MIT). Everything else is North Harbor Technologies, 2026, MIT.
+The rubric structure, state machine, and the Ashby, Greenhouse, and Lever clients derive from [santifer/career-ops](https://github.com/santifer/career-ops) (MIT). Everything else is North Harbor Technologies, 2026, MIT. See NOTICE.
