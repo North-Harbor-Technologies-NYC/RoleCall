@@ -6,11 +6,12 @@ export const FIXTURES = process.env.RC_FIXTURES === '1';
 const likeOf = (q: string) => `%${q}%`;
 const matches = (j: { company: string; role?: string; title?: string }, q: string) => !q || [j.company, j.role, j.title].some(s => (s || '').toLowerCase().includes(q.toLowerCase()));
 
-// Today: every undecided role at 3.5 or above, newest first, best first within a day.
+// Today: every undecided role at 3.5 or above. Strong matches (4.0+) first so one never sits under a maybe,
+// then newest first, then best first within a day.
 export async function todayQueue(): Promise<Job[]> {
-  if (FIXTURES) return JOBS.filter(j => j.status === 'Evaluated' && Number(j.score) >= 3.5 && !j.action).sort((a, b) => String(b.date_found).localeCompare(String(a.date_found)) || Number(b.score) - Number(a.score));
+  if (FIXTURES) return JOBS.filter(j => j.status === 'Evaluated' && Number(j.score) >= 3.5 && !j.action).sort((a, b) => (Number(b.score) >= 4 ? 1 : 0) - (Number(a.score) >= 4 ? 1 : 0) || String(b.date_found).localeCompare(String(a.date_found)) || Number(b.score) - Number(a.score));
   await ensureSchema();
-  const rows = await sql`select * from jobs where status = 'Evaluated' and score >= 3.5 and action = '' order by date_found desc, score desc, company`;
+  const rows = await sql`select * from jobs where status = 'Evaluated' and score >= 3.5 and action = '' order by (score >= 4) desc, date_found desc, score desc, company`;
   return rows as unknown as Job[];
 }
 // Roles decided today (action set or status moved today), for the progress segments.

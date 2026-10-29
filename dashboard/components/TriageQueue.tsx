@@ -189,7 +189,7 @@ export default function TriageQueue({ initial, decidedBefore, runTime }: Props) 
               <div className="right">
                 <Score value={j.score} size="sm" />
                 <div className="btns">
-                  {j.tone === 'fit' && <button className="btn btn-primary btn-sm" disabled={busy === j.id} onClick={() => apply(j)}>{busy === j.id ? 'Building…' : 'Apply'}</button>}
+                  <button className="btn btn-primary btn-sm" disabled={busy === j.id} onClick={() => apply(j)}>{busy === j.id ? 'Building…' : 'Apply'}</button>
                   <button className="btn btn-secondary btn-sm" onClick={() => hold(j)}>Hold</button>
                   <button className="btn btn-ghost btn-sm" onClick={() => skip(j)}>Skip</button>
                 </div>
