@@ -12,7 +12,8 @@ const mono = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500'], variab
 export const metadata: Metadata = {
   title: 'RoleCall',
   description: 'Every morning the roles report in. The ones that fit are here.',
-  icons: { icon: '/brand/rolecall-mark.svg', apple: '/brand/rolecall-mark.svg' },
+  // SVG for browsers that take it, PNG for Safari and home screens.
+  icons: { icon: [{ url: '/brand/rolecall-mark.svg', type: 'image/svg+xml' }, { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' }, { url: '/icon-512.png', sizes: '512x512', type: 'image/png' }], apple: '/apple-touch-icon.png' },
 };
 export const viewport: Viewport = { themeColor: '#F5F1E9', width: 'device-width', initialScale: 1 };
 

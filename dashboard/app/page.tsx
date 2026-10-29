@@ -28,7 +28,7 @@ export default async function Today() {
     const [q, d, nd, r] = await Promise.all([todayQueue(), decidedToday(), needs(), latestRun()]);
     queue = q.map(j => { const fw = fitWatch(j); return { id: j.id, role: j.role, company: j.company, meta: metaLine(j), score: scoreNum(j.score), tone: toneOf(j.score), fit: fw.fit, watch: fw.watch, checks: checksOf(j), report: reportLink(j.report, j.date_found), url: j.url }; });
     decided = d.length; n = nd; run = (r as Record<string, unknown>) || null;
-    if (run?.run_date) dayJobs = (await jobsForDay(isoDay(String(run.run_date)))).filter(j => j.status === 'SKIP').length;
+    if (run?.run_date) dayJobs = (await jobsForDay(isoDay(run.run_date as string | Date))).filter(j => j.status === 'SKIP').length;
   } catch (e) { dbError = String((e as Error).message || e); }
 
   const digest = (run?.digest || {}) as Record<string, unknown>;
@@ -45,7 +45,7 @@ export default async function Today() {
   const kept = Number((summary.evaluate as Record<string, unknown> | undefined)?.at_or_above_4 ?? 0) + Number((summary.evaluate as Record<string, unknown> | undefined)?.optional ?? 0);
   const failures = Array.isArray(digest.failures) ? (digest.failures as unknown[]).length : 0;
   const cnv = Array.isArray(digest.could_not_verify) ? (digest.could_not_verify as unknown[]).length : 0;
-  const runDay = run?.run_date ? isoDay(String(run.run_date)) : '';
+  const runDay = run?.run_date ? isoDay(run.run_date as string | Date) : '';
 
   return (
     <>

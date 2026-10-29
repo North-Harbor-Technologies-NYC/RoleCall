@@ -44,7 +44,7 @@ export default async function FeedPage({ searchParams }: { searchParams: Promise
                 <span><div className="role withdot"><span className={`dotnew ${r.is_new ? '' : 'off'}`} aria-hidden="true" /><a href={String(r.url)} target="_blank" rel="noreferrer">{String(r.title)}</a></div><div className="co" style={{ paddingLeft: 17 }}>{String(r.company)}</div></span>
                 <span className="cell">{locationShort(String(r.location || ''))}</span>
                 <span className="num">T{String(r.tier)}</span>
-                <span className="num">{mmdd(String(r.first_seen || ''))}</span>
+                <span className="num">{mmdd(r.first_seen as string | Date | null)}</span>
                 <span className="right">{r.job_id ? <Link href={`/jobs/${encodeURIComponent(String(r.job_id))}`} className={`tone-${tone === 'neutral' ? 'mute' : tone}`} style={{ font: '600 16px/1 var(--rc-font)', textDecoration: 'none', fontVariantNumeric: 'tabular-nums' }}>{s === null ? String(r.job_status) : s.toFixed(1)}</Link> : <span className="tone-dim">–</span>}</span>
               </div>
             );
