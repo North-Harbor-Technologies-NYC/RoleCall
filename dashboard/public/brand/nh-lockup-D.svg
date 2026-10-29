@@ -1,0 +1,14 @@
+<?xml version="1.0"?><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 229.42000000000002 47" width="229.42000000000002" height="47">
+  <title>North Harbor Technologies · Lockup D · Plate · NH·25</title>
+  <rect x="0.5" y="0.5" width="228.42000000000002" height="46" fill="none" stroke="rgba(15,15,18,0.18)" stroke-width="1" rx="2"></rect>
+  <text x="14" y="23.5" font-family="JetBrains Mono, ui-monospace, SF Mono, Menlo, monospace" font-weight="400" font-size="11" letter-spacing="3.08" fill="rgba(15,15,18,0.45)" dominant-baseline="central">NH · 25</text>
+  <g transform="translate(94.22, 10.5)">
+    <circle cx="13" cy="13" r="8.84" fill="none" stroke="#0F0F12" stroke-width="0.9"></circle>
+    <circle cx="13" cy="13" r="4.862" fill="none" stroke="#0F0F12" stroke-width="0.7" opacity="0.45"></circle>
+    <polygon points="2.215200000000001,13 13,14.2376 23.784799999999997,13 13,11.7624" fill="#0F0F12" opacity="0.5"></polygon>
+    <polygon points="13,24.6688 14.5028,13 11.4972,13" fill="#0F0F12" opacity="0.92"></polygon>
+    <polygon points="13,1.331199999999999 14.5028,13 11.4972,13" fill="#6E8696"></polygon>
+    <circle cx="13" cy="13" r="1.1492" fill="#0F0F12"></circle></g>
+  <text x="174.82" y="18.6" font-family="Helvetica Neue, Hanken Grotesk, Helvetica, Arial, sans-serif" font-weight="500" font-size="14" letter-spacing="-0.35000000000000003" fill="#0F0F12" text-anchor="middle" dominant-baseline="central">North Harbor</text>
+  <text x="174.82" y="31.200000000000003" font-family="JetBrains Mono, ui-monospace, SF Mono, Menlo, monospace" font-weight="400" font-size="8" letter-spacing="1.28" fill="rgba(15,15,18,0.45)" text-anchor="middle" dominant-baseline="central">TECHNOLOGIES</text>
+</svg>

@@ -1,0 +1,64 @@
+# RoleCall profile. The routine reads this first. Replace every value; keep the keys.
+
+candidate:
+  full_name: "Your Name"
+  first_name: "Your"
+  email: "you@example.com"          # the digest goes here, from your own Gmail account
+  phone: ""                         # never put in outbound messages; the resume builder uses it
+  location: "City, ST"
+  linkedin: "linkedin.com/in/you"
+  portfolio_url: ""
+
+# Gmail. Make both labels, then a filter that applies inbox_label to your alert senders (see portals/feeds.yml).
+gmail:
+  inbox_label: "Jobs/Inbox"
+  processed_label: "Jobs/Processed"
+  backlog_before: "2026-01-01"      # unread alerts older than this are marked read without processing
+
+target_roles:
+  primary:
+    - "VP of Content Operations"
+    - "Head of Post-Production"
+  # Archetypes drive the rubric's archetype dimension. Three to five. Detail them in positioning.md.
+  archetypes:
+    - name: "VP / Head of Content Operations"
+      level: "VP / SVP"
+      fit: "primary"
+    - name: "Head of Post-Production"
+      level: "VP / SVP"
+      fit: "primary"
+    - name: "Enterprise Account Executive, media"
+      level: "Senior / Enterprise"
+      fit: "secondary"
+    - name: "Solutions Consultant"
+      level: "Senior"
+      fit: "adjacent"
+
+narrative:
+  headline: "One line: who you are and what you have done at scale"
+  exit_story: >
+    Two or three sentences in your voice on why you are looking and what you bring. The resume
+    PROFILE paragraph and every cover letter start from this.
+  superpowers:
+    - "Three to five, each a fact with a number or a name in it"
+  proof_points:
+    - name: "Named project or result"
+      hero_metric: "The one number that makes it real"
+
+compensation:
+  minimum: "$150K"                  # the hard floor; rubric/blockers.yml and the comp dimension use it
+  target_range: "$180K to $250K"
+  currency: "USD"
+  location_flexibility: "City-based, open to hybrid or remote"
+
+location:
+  country: "United States"
+  city: "City"
+  timezone: "America/New_York"      # also the routine's run date
+  visa_status: "No sponsorship needed"
+
+# Routine budget. SETUP.md explains the Pro-plan settings.
+routine:
+  model_note: "Sonnet on a Pro plan, Opus on Max"
+  daily_cap: 15                     # candidates scored per run, best tiers first
+  report_threshold: 4.0             # full A-G report at and above this score

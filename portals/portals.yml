@@ -1,0 +1,996 @@
+# RoleCall portal configuration (example: media, entertainment, sports, and AI companies)
+# Tailored for: Media & Entertainment | Creative AI Tools | Studios & Streamers | AI Agencies
+# Last updated: April 2026
+
+# -- Title filter --
+# At least 1 positive keyword must match AND 0 negatives must match (case-insensitive).
+
+title_filter:
+  # Positives are domain words only (changed 2026-10-13). The leadership level is enforced by the
+  # seniority_required gate in rubric/blockers.yml, so VP, Director, and Head of are not listed here;
+  # a title must carry a domain word AND pass that gate. Matching is whole-word, case-insensitive
+  # (portals/_filters.mjs), so "AI" no longer matches "training" and "Production" no longer matches "reproduction".
+  positive:
+    # -- Post-production, content, media, production --
+    - "Post-Production"
+    - "Post Production"
+    - "Head of Post"
+    - "Content"
+    - "Media"
+    - "Production"
+    - "Video"
+    - "Multimedia"
+    - "Creative"
+    - "Studio"
+    - "Broadcast"
+    - "Programming"
+    - "Localization"
+    - "Dubbing"
+    - "Editorial"
+    - "Entertainment"
+    - "Streaming"
+    - "Film"
+    - "Television"
+    - "Podcast"
+    - "Executive Producer"
+    # -- AI --
+    - "AI"
+    - "Generative"
+    - "GenAI"
+    - "Transformation"
+    # -- Operations and technology --
+    - "Operations"
+    - "Workflow"
+    - "Supply Chain"
+    - "Technology"
+    # -- Sales and partnerships (Enterprise AE track) --
+    - "Enterprise"
+    - "Strategic Account"
+    - "Strategic Accounts"
+    - "Account Executive"
+    - "Account Director"
+    - "Partnerships"
+    # -- Consulting and advisory --
+    - "Solutions"
+    - "Advisory"
+  negative:
+    # -- Seniority / role level --
+    - "Junior"
+    - "Associate"
+    - "Intern"
+    - "Coordinator"
+    - "Assistant Editor"
+    - "Staff Editor"
+    # -- Engineering / technical roles not relevant --
+    - "Data Scientist"
+    - "Software Engineer"
+    - "Backend Engineer"
+    - "Frontend Engineer"
+    - "DevOps"
+    - "Blockchain"
+    - "Web3"
+    - "Crypto"
+    - "Embedded"
+    - "COBOL"
+    # -- Too-broad title matches (caused noise last scan) --
+    - "Creative Director"        # matched brand copywriting, gaming - too junior/different track
+    - "Product Marketing"        # not target function
+    - "Product Manager"          # product management is not a target function (added 2026-10-13)
+    - "Product Management"
+    - "Brand Marketing"
+    - "Growth Marketing"
+    - "Performance Marketing"
+    - "CMS"                      # content management system roles, not media ops
+    - "Healthcare"
+    - "Clinical"
+    - "Legal"
+    - "Compliance"
+    - "Finance Director"
+    - "Controller"
+    # -- Engineering / research roles (new API providers pull full job boards) --
+    - "Research Engineer"
+    - "Staff Engineer"
+    - "Software Engineer"
+    - "Solutions Engineer"      # technical pre-sales engineer, not advisory
+    - "Infrastructure Engineer"
+    - "Inference Engineer"
+    - "Member of Technical Staff"
+    - "ML Engineer"
+    - "Machine Learning"
+    - "Data Engineer"
+    - "Platform Engineer"
+    - "Security Engineer"
+    - "QA Engineer"
+    - "Site Reliability"
+    - "Researcher"              # AI Researcher, Staff Researcher etc.
+    - "Deployment Strategist"   # technical deployment role
+    - "Commercial Counsel"      # legal
+    - "Executive Assistant"
+    - "Customer Support Specialist"
+    # -- Regional / language variants (API providers pull all global listings) --
+    - "German Speaking"
+    - "French Speaking"
+    - "Italian Speaking"
+    - "Spanish Speaking"
+    - "DACH"
+    - "India"
+    - "LATAM"
+    - "Latin America"
+    - "Middle East"
+    - "Southeast Asia"
+    - "North Asia"
+    - "ANZ"
+    - "Oceania"
+    - "Brazil"
+    - "Mexico"
+    - "Spain"
+    - "France"
+    - "Germany"
+    - "UK/I"
+    - "Australia"
+    - "Government"              # public sector AE roles
+    - "Customer Success Manager" # CS not primary archetype
+    - "Procurement"             # supply chain/purchasing
+    - "Product Designer"        # design role, not ops/sales/strategy
+    - "GTM Enablement"          # internal sales ops
+    - "SMB"                     # wrong deal level
+    - "Mid-Market"              # wrong deal level (enterprise and strategic deal levels only)
+    - "Production Manager"      # IC level, below seniority target
+    - "Deputy Managing Editor"  # editorial IC
+    # -- Geographic noise (European offices of US companies) --
+    - "EMEA"
+    - "APAC"
+    - "Munich"
+    - "Paris"
+    - "Berlin"
+    - "Amsterdam"
+    - "Zurich"
+    - "Zürich"
+    - "London"
+    - "Singapore"
+    - "Tokyo"
+    - "Sydney"
+    - "Netherlands"
+    - "Chile"
+    - "Benelux"
+    - "United Kingdom"
+    - "Europe"                  # catch "- Europe" regional suffixes
+  seniority_boost:
+    - "VP"
+    - "EVP"
+    - "SVP"
+    - "Head of"
+    - "Senior Director"
+    - "Director"
+    - "Principal"
+
+# -- Search queries --
+# Broad discovery across job portals for the owner's target roles.
+
+search_queries:
+  # -- Creative AI / Generative Video companies --
+  - name: Ashby - AI Content & Production Leadership
+    query: 'site:jobs.ashbyhq.com "Head of" OR "VP" OR "Director" "AI" OR "Content" OR "Production" OR "Creative"'
+    enabled: true
+
+  - name: Greenhouse - AI Content & Production Leadership
+    query: 'site:job-boards.greenhouse.io "Head of" OR "VP" OR "Director" "AI" OR "content" OR "production" OR "post-production"'
+    enabled: true
+
+  - name: Lever - AI Content Leadership
+    query: 'site:jobs.lever.co "VP" OR "Head of" "AI" OR "content" OR "production" OR "media"'
+    enabled: true
+
+  # -- Enterprise AE at AI tools companies --
+  - name: Ashby - Enterprise AE Media & Entertainment
+    query: 'site:jobs.ashbyhq.com "Enterprise Account Executive" OR "Account Director" "media" OR "entertainment" OR "AI"'
+    enabled: true
+
+  - name: Greenhouse - Enterprise AE AI tools
+    query: 'site:job-boards.greenhouse.io "Enterprise Account Executive" "AI" OR "creative" OR "media"'
+    enabled: true
+
+  # -- Post-Production & Media Operations at tech-forward companies --
+  - name: All portals - Post-Production Leadership
+    query: '"Head of Post-Production" OR "VP Post Production" OR "Director of Post Production" AI OR streaming OR "generative"'
+    enabled: true
+
+  # -- AI Transformation & Strategy --
+  - name: All portals - AI Transformation Leadership
+    query: '"AI Transformation" OR "AI Strategy" OR "Head of AI" OR "VP of AI" "media" OR "content" OR "entertainment" OR "creative"'
+    enabled: true
+
+  # -- Wellfound startups --
+  - name: Wellfound - Creative AI Leadership
+    query: 'site:wellfound.com "Head of" OR "VP" "AI" OR "content" OR "post-production" OR "generative"'
+    enabled: true
+
+
+# -- Tracked companies --
+# Career pages checked directly with Playwright for real-time listings.
+
+tracked_companies:
+
+  # ── CREATIVE AI TOOLS ─────────────────────────────────────────────────────
+
+  - name: Runway
+    careers_url: https://jobs.ashbyhq.com/runway-ml
+    scan_method: websearch
+    scan_query: 'site:jobs.ashbyhq.com/runway-ml OR site:runway.com/careers'
+    enabled: true
+
+  - name: Adobe
+    careers_url: https://adobe.wd5.myworkdayjobs.com/external_experienced
+    scan_method: websearch
+    scan_query: '"adobe" "AI" OR "Firefly" OR "GenStudio" "Head of" OR "VP" OR "Director" OR "Enterprise" "media" OR "content" OR "entertainment" site:adobe.com/careers OR site:job-boards.greenhouse.io/adobe'
+    enabled: true
+
+  - name: ElevenLabs
+    careers_url: https://jobs.ashbyhq.com/elevenlabs
+    scan_method: websearch
+    scan_query: 'site:jobs.ashbyhq.com/elevenlabs "VP" OR "Head" OR "Director" OR "Enterprise" OR "Account"'
+    enabled: true
+
+  - name: Luma AI
+    careers_url: https://jobs.ashbyhq.com/lumaai
+    scan_method: websearch
+    scan_query: 'site:jobs.ashbyhq.com/lumaai OR site:lumalabs.ai/careers'
+    enabled: true
+
+  - name: Sora / OpenAI
+    careers_url: https://jobs.ashbyhq.com/openai
+    scan_method: websearch
+    scan_query: 'site:openai.com/careers "media" OR "content" OR "production" OR "enterprise" OR "partnerships" OR "Account Executive"'
+    enabled: true
+
+  - name: Pika Labs
+    careers_url: https://jobs.ashbyhq.com/pika
+    scan_method: websearch
+    scan_query: '"pika" OR "pika labs" careers "Head of" OR "VP" OR "Director" OR "Enterprise" "AI" OR "video" OR "media"'
+    notes: "SF. AI video generation. Competitor to Runway."
+    enabled: true
+
+  - name: Synthesia
+    careers_url: https://jobs.ashbyhq.com/synthesia
+    scan_method: websearch
+    scan_query: 'site:jobs.ashbyhq.com/synthesia "VP" OR "Head" OR "Director" OR "Enterprise" OR "Account"'
+    notes: "NYC/London. AI video for enterprise. Big media/marketing use case."
+    enabled: true
+
+  - name: HeyGen
+    careers_url: https://job-boards.greenhouse.io/heygen
+    scan_method: websearch
+    scan_query: '"heygen" careers "VP" OR "Head" OR "Director" OR "Enterprise" OR "media" OR "Account Executive"'
+    notes: "LA/Remote. AI avatar video platform. Fast-growing, media use cases."
+    enabled: true
+
+  - name: Kling AI / Kuaishou
+    careers_url: https://kling.kuaishou.com/en
+    scan_method: websearch
+    scan_query: '"kling" OR "kuaishou" careers "Head of" OR "VP" OR "Enterprise" "AI" OR "video" OR "media"'
+    notes: "Remote/NYC. Kling video generation. Growing enterprise presence in US. No known ATS API - websearch only (fixed 2026-06)."
+    enabled: true
+
+  - name: Stability AI
+    careers_url: https://job-boards.greenhouse.io/stabilityai
+    api: https://boards-api.greenhouse.io/v1/boards/stabilityai/jobs
+    notes: "SF/London/Remote. Generative image/video/audio. Media & entertainment focus."
+    enabled: true
+
+  - name: Midjourney
+    careers_url: https://jobs.ashbyhq.com/midjourney
+    scan_method: websearch
+    scan_query: '"midjourney" careers OR jobs "VP" OR "Head" OR "Director" OR "media" OR "partnerships"'
+    notes: "SF/Remote. Leading image gen. Very small team, rare openings but worth watching."
+    enabled: true
+
+  - name: Udio
+    careers_url: https://www.udio.com/careers
+    scan_method: websearch
+    scan_query: '"udio" careers "VP" OR "Head" OR "Director" OR "Enterprise" OR "content" OR "media"'
+    notes: "NYC. AI music generation. Content/media adjacent."
+    enabled: true
+
+  - name: Suno
+    careers_url: https://suno.com/careers
+    scan_method: websearch
+    scan_query: '"suno" careers "VP" OR "Head" OR "Director" OR "Enterprise" OR "partnerships"'
+    notes: "Cambridge MA/Remote. AI music generation. Content strategy roles."
+    enabled: true
+
+  # ── STUDIOS & STREAMERS ───────────────────────────────────────────────────
+
+  - name: Netflix
+    careers_url: https://jobs.netflix.com
+    scan_method: websearch
+    scan_query: 'site:jobs.netflix.com "AI" OR "post-production" OR "content operations" OR "generative" OR "production" "VP" OR "Director" OR "Head" -EMEA -APAC -"Latin America"'
+    notes: "LA/NYC/Remote. Huge content operation. Investing heavily in AI production tools."
+    enabled: true
+
+  - name: Disney (Walt Disney Company)
+    careers_url: https://jobs.disneycareers.com
+    scan_method: websearch
+    scan_query: 'site:jobs.disneycareers.com "AI" OR "post-production" OR "content" OR "generative" OR "production" "VP" OR "Director" OR "Head" "New York" OR "NYC" OR "Remote" OR "Los Angeles" OR "Burbank"'
+    enabled: true
+
+  - name: Hulu
+    careers_url: https://jobs.disneycareers.com
+    scan_method: websearch
+    scan_query: '"hulu" "AI" OR "post-production" OR "content" OR "production" "VP" OR "Director" OR "Head" site:jobs.disneycareers.com'
+    enabled: true
+
+  - name: Warner Bros. Discovery
+    careers_url: https://jobs.wbd.com
+    scan_method: websearch
+    scan_query: '"Warner Bros" OR "WBD" OR "HBO" OR "Discovery" careers "AI" OR "post-production" OR "content" OR "production" "VP" OR "Director" OR "Head" "New York" OR "NYC" OR "Remote" OR "Los Angeles" site:jobs.wbd.com'
+    enabled: true
+
+  - name: Amazon MGM Studios / Prime Video
+    careers_url: https://www.amazon.jobs
+    scan_method: websearch
+    scan_query: 'site:amazon.jobs "AI" OR "post-production" OR "content" OR "prime video" "VP" OR "Director" OR "Head" "media" OR "entertainment"'
+    enabled: true
+
+  - name: Paramount
+    careers_url: https://careers.paramount.com
+    scan_method: websearch
+    scan_query: 'site:careers.paramount.com "AI" OR "post-production" OR "content" "VP" OR "Director" OR "Head"'
+    enabled: true
+
+  - name: NBCUniversal
+    careers_url: https://www.nbcunicareers.com/search-jobs
+    scan_method: websearch
+    scan_query: 'site:nbcunicareers.com "AI" OR "post-production" OR "content operations" OR "production" "VP" OR "Director" OR "Head" -site:builtinnyc.com -site:linkedin.com -site:indeed.com -site:glassdoor.com'
+    notes: "NYC. NBC, Peacock, Bravo, E!, Syfy. Direct portal only - no aggregators."
+    enabled: true
+
+  - name: A+E Networks
+    careers_url: https://www.aegm.com/about/careers
+    scan_method: websearch
+    scan_query: '"A+E Networks" OR "A+E" OR "aegm" careers "AI" OR "post-production" OR "content" OR "production" "VP" OR "Director" OR "Head"'
+    enabled: true
+
+  - name: Apple TV+
+    careers_url: https://www.apple.com/careers/us/
+    scan_method: websearch
+    scan_query: 'site:jobs.apple.com "AI" OR "post-production" OR "content" "VP" OR "Director" OR "Head" "entertainment" OR "media" OR "streaming"'
+    notes: "NYC/LA/Cupertino. Apple TV+ growing fast with original content."
+    enabled: true
+
+  - name: Peacock / NBCUniversal Streaming
+    careers_url: https://www.nbcunicareers.com
+    scan_method: websearch
+    scan_query: '"peacock" OR "NBCUniversal streaming" careers "AI" OR "production" OR "content" "VP" OR "Director"'
+    notes: "NYC. Peacock streaming. Part of NBCUniversal."
+    enabled: true
+
+  - name: Spotify (Podcast & Video)
+    careers_url: https://jobs.lever.co/spotify
+    scan_method: websearch
+    scan_query: '"spotify" jobs "AI" OR "content" OR "production" OR "video" OR "podcast" "VP" OR "Director" OR "Head" "New York" OR "NYC" OR "Remote" site:lifeatspotify.com OR site:jobs.lever.co/spotify'
+    notes: "NYC/Remote. Expanding into video podcasts and AI-driven content."
+    enabled: true
+
+  # ── PRODUCTION COMPANIES & STUDIOS ────────────────────────────────────────
+
+  - name: A24
+    careers_url: https://job-boards.greenhouse.io/a24
+    scan_method: websearch
+    scan_query: '"a24" careers "AI" OR "post-production" OR "content" OR "operations" "Director" OR "Head" OR "VP"'
+    notes: "NYC. Prestige film/TV studio. Tech-forward for indie space."
+    enabled: true
+
+  - name: Anonymous Content
+    careers_url: https://www.anonymouscontent.com/careers
+    scan_method: websearch
+    scan_query: '"anonymous content" careers "AI" OR "post-production" OR "production" "Head" OR "VP" OR "Director"'
+    notes: "LA/NYC. High-end commercial and scripted production."
+    enabled: true
+
+  - name: Imagine Entertainment
+    careers_url: https://www.imagineentertainment.com/careers
+    scan_method: websearch
+    scan_query: '"imagine entertainment" careers "AI" OR "post-production" OR "content" "Head" OR "VP" OR "Director"'
+    notes: "LA. Brian Grazer/Ron Howard. Feature film and TV production."
+    enabled: true
+
+  # ── AI-NATIVE MEDIA & NEWS ─────────────────────────────────────────────────
+
+  - name: Perplexity AI
+    careers_url: https://jobs.ashbyhq.com/perplexity
+    notes: "SF/Remote. AI search + media pivot. Hiring media/content leadership. Uses Ashby, not Greenhouse."
+    enabled: true
+
+  - name: Axios
+    careers_url: https://job-boards.greenhouse.io/axios
+    scan_method: websearch
+    scan_query: 'site:job-boards.greenhouse.io/axios "VP" OR "Head" OR "Director" OR "AI" OR "content" OR "media"'
+    notes: "DC/NYC/Remote. Digital news. AI-powered editorial workflows. Moved from Lever to Greenhouse (fixed 2026-06)."
+    enabled: true
+
+  - name: The Athletic (NYT)
+    careers_url: https://jobs.lever.co/theathletic
+    notes: "Remote. Sports journalism. AI content operations."
+    enabled: true
+
+  # ── AGENCIES & CONSULTANCIES ──────────────────────────────────────────────
+
+  - name: Deloitte Digital
+    careers_url: https://www2.deloitte.com/us/en/careers.html
+    scan_method: websearch
+    scan_query: '"deloitte" careers "AI" OR "generative AI" "media" OR "entertainment" OR "content" "Director" OR "VP" OR "Managing Director"'
+    notes: "NYC. AI transformation consulting. Media & Entertainment practice. No active Greenhouse API - websearch only (fixed 2026-06)."
+    enabled: true
+
+  - name: Accenture Song
+    careers_url: https://www.accenture.com/us-en/careers
+    scan_method: websearch
+    scan_query: '"accenture" careers "AI" "media" OR "entertainment" OR "content" OR "creative" "Director" OR "VP" OR "Managing Director"'
+    notes: "NYC. Accenture's creative transformation arm. AI + media clients."
+    enabled: true
+
+  - name: WPP / Hogarth
+    careers_url: https://job-boards.greenhouse.io/wpp
+    scan_method: websearch
+    scan_query: '"WPP" OR "Hogarth" careers "AI" OR "generative AI" "Head of" OR "VP" OR "Director" "content" OR "production" OR "media"'
+    notes: "NYC/London. Hogarth is WPP's content production arm - deep AI investment."
+    enabled: true
+
+  - name: Publicis Groupe / Publicis Sapient
+    careers_url: https://careers.publicisgroupe.com
+    scan_method: websearch
+    scan_query: '"publicis" careers "AI" "Head of" OR "VP" OR "Director" "content" OR "media" OR "production" OR "creative"'
+    notes: "NYC. Publicis has a major AI content transformation practice (Marcel AI)."
+    enabled: true
+
+  - name: MediaLink
+    careers_url: https://www.medialink.com/careers
+    scan_method: websearch
+    scan_query: '"medialink" careers "AI" OR "content" OR "media" "VP" OR "Director" OR "Head"'
+    notes: "NYC. Media industry strategic advisory. Senior placement roles."
+    enabled: true
+
+  # ── MARTECH & CONTENT SUPPLY CHAIN ───────────────────────────────────────
+
+  - name: Brightcove
+    careers_url: https://www.brightcove.com/en/company/careers/
+    scan_method: websearch
+    scan_query: '"brightcove" careers "VP" OR "Director" OR "Head" OR "Enterprise" "media" OR "content" OR "video" OR "AI"'
+    notes: "Boston/NYC/Remote. Video hosting and streaming platform. Media ops roles. No active ATS API - websearch only (fixed 2026-06)."
+    enabled: true
+
+  - name: Kaltura
+    careers_url: https://corp.kaltura.com/company/careers/
+    scan_method: websearch
+    scan_query: '"kaltura" careers "VP" OR "Director" OR "Head" OR "Enterprise" "content" OR "media" OR "video"'
+    notes: "NYC. Video cloud platform for media & enterprise. Careers hosted on own site."
+    enabled: true
+
+  - name: Avid Technology
+    careers_url: https://www.avid.com/about-avid/careers
+    scan_method: websearch
+    scan_query: '"avid technology" OR "avid.com" careers "AI" OR "post-production" OR "media" "Director" OR "VP" OR "Head" OR "Enterprise" OR "Account"'
+    enabled: true
+
+  - name: Frame.io (Adobe)
+    careers_url: https://www.adobe.com/careers.html
+    scan_method: websearch
+    scan_query: '"frame.io" OR "adobe frame" careers "AI" OR "post-production" OR "workflow" "Head" OR "VP" OR "Director" OR "Enterprise"'
+    notes: "NYC/Remote. Frame.io is now part of Adobe. Post-production collaboration tool."
+    enabled: true
+
+  - name: Iconik
+    careers_url: https://www.iconik.io/careers
+    scan_method: websearch
+    scan_query: '"iconik" careers "AI" OR "media" OR "MAM" "VP" OR "Director" OR "Head" OR "Enterprise" OR "Account"'
+    enabled: true
+
+  - name: Backlight (formerly cineSync / ftrack)
+    careers_url: https://backlight.co/careers
+    scan_method: websearch
+    scan_query: '"backlight" OR "ftrack" OR "cinesync" careers "AI" OR "post-production" OR "media" "VP" OR "Director" OR "Head" OR "Enterprise"'
+    notes: "Remote. Production management and review tools for film/TV."
+    enabled: true
+
+  # ── STARTUPS TO WATCH ─────────────────────────────────────────────────────
+
+  - name: Captions
+    careers_url: https://jobs.ashbyhq.com/mirage
+    scan_method: websearch
+    scan_query: '"captions.ai" OR "captions" careers "VP" OR "Head" OR "Director" OR "Enterprise" OR "media" OR "content"'
+    notes: "NYC. AI-powered video creation and captioning. Fast-growing, media-native."
+    enabled: true
+
+  - name: Descript
+    careers_url: https://job-boards.greenhouse.io/descript
+    scan_method: websearch
+    scan_query: 'site:job-boards.greenhouse.io/descript "VP" OR "Head" OR "Director" OR "Enterprise" OR "media"'
+    notes: "SF/Remote. AI video/podcast editor. Media production tool. On Greenhouse not Ashby (fixed 2026-06)."
+    enabled: true
+
+  - name: Opus Clip
+    careers_url: https://jobs.ashbyhq.com/opusclip
+    scan_method: websearch
+    scan_query: '"opus clip" OR "opus.pro" careers "VP" OR "Head" OR "Director" OR "Enterprise" OR "media" OR "content"'
+    notes: "Remote. AI short-form video repurposing. Content ops use case."
+    enabled: true
+
+  - name: Wondershare Filmora / Filmora AI
+    careers_url: https://www.wondershare.com/careers.html
+    scan_method: websearch
+    scan_query: '"wondershare" OR "filmora" careers "AI" OR "content" OR "media" "VP" OR "Director" OR "Head" OR "Enterprise"'
+    notes: "Remote/Vancouver. AI video editor with major consumer + pro base."
+    enabled: true
+
+  - name: Tavus
+    careers_url: https://jobs.ashbyhq.com/tavus
+    scan_method: websearch
+    scan_query: '"tavus" careers "VP" OR "Head" OR "Director" OR "Enterprise" OR "media" OR "content" OR "Account"'
+    notes: "SF/Remote. Personalized AI video at scale. Enterprise content use case."
+    enabled: true
+
+  # ── BIG TECH ──────────────────────────────────────────────────────────────
+
+  - name: Google / YouTube
+    careers_url: https://www.google.com/about/careers/applications/
+    scan_method: websearch
+    scan_query: 'site:careers.google.com "AI" OR "YouTube" OR "post-production" OR "content" OR "generative" "VP" OR "Director" OR "Head" "media" OR "entertainment" OR "content" OR "production"'
+    notes: "NYC/LA/Remote. YouTube, Google DeepMind, Google TV. Huge AI content investment. YouTube is the world's largest video platform."
+    enabled: true
+
+  - name: YouTube (standalone search)
+    careers_url: https://www.google.com/about/careers/applications/
+    scan_method: websearch
+    scan_query: '"youtube" careers "AI" OR "content" OR "creator" OR "production" "VP" OR "Director" OR "Head" OR "partnerships" site:careers.google.com'
+    notes: "San Bruno/NYC. YouTube-specific roles - Creator partnerships, content operations, AI tools for creators."
+    enabled: true
+
+  - name: Google DeepMind
+    careers_url: https://deepmind.google/careers
+    scan_method: websearch
+    scan_query: '"deepmind" careers "media" OR "creative" OR "content" OR "AI" "VP" OR "Director" OR "Head" OR "partnerships" OR "enterprise"'
+    notes: "NYC/London/Remote. DeepMind applied AI. Veo video generation model."
+    enabled: true
+
+  - name: Amazon (expanded)
+    careers_url: https://www.amazon.jobs
+    scan_method: websearch
+    scan_query: 'site:amazon.jobs "AI" OR "post-production" OR "content" OR "prime video" OR "MGM" OR "Twitch" "VP" OR "Director" OR "Head" "media" OR "entertainment" OR "production" OR "streaming"'
+    enabled: true
+
+  - name: Twitch
+    careers_url: https://www.twitch.tv/jobs
+    scan_method: websearch
+    scan_query: '"twitch" careers "AI" OR "content" OR "production" OR "media" OR "creator" "VP" OR "Director" OR "Head" OR "partnerships"'
+    enabled: true
+
+  - name: Adobe (full suite)
+    careers_url: https://www.adobe.com/careers.html
+    scan_method: websearch
+    scan_query: 'site:adobe.com/careers "AI" OR "Firefly" OR "GenStudio" OR "Frame.io" OR "Premiere" "Head of" OR "VP" OR "Director" OR "Enterprise" OR "Account Executive" "media" OR "content" OR "entertainment" OR "production"'
+    enabled: true
+
+  - name: Meta / Instagram
+    careers_url: https://www.metacareers.com
+    scan_method: websearch
+    scan_query: 'site:metacareers.com "AI" OR "content" OR "media" OR "production" OR "creator" OR "generative" "VP" OR "Director" OR "Head" OR "partnerships" "entertainment" OR "content" OR "media" OR "creative"'
+    notes: "NYC/LA/Remote. Meta AI, Instagram, Facebook, WhatsApp, Reality Labs (Quest). Massive investment in generative AI and creator tools. Reels production, AI content workflows."
+    enabled: true
+
+  - name: Meta Reality Labs
+    careers_url: https://www.metacareers.com
+    scan_method: websearch
+    scan_query: 'site:metacareers.com "Reality Labs" OR "AR" OR "VR" OR "Quest" "AI" OR "content" OR "media" OR "production" "VP" OR "Director" OR "Head"'
+    notes: "NYC/Remote/Menlo Park. Meta's AR/VR division. AI content creation for immersive media."
+    enabled: true
+
+  # ── SPORTS LEAGUES & MEDIA ────────────────────────────────────────────────
+
+  - name: NFL (National Football League)
+    careers_url: https://job-boards.greenhouse.io/nflcareers
+    scan_method: websearch
+    scan_query: '"NFL" OR "national football league" careers "AI" OR "content" OR "production" OR "media" OR "post-production" "VP" OR "Director" OR "Head" OR "Senior"'
+    notes: "NYC. NFL Media, NFL Films, NFL+. Major content operation with AI investment."
+    enabled: true
+
+  - name: NBA (National Basketball Association)
+    careers_url: https://careers.nba.com
+    scan_method: websearch
+    scan_query: '"NBA" careers "AI" OR "content" OR "production" OR "media" OR "post-production" "VP" OR "Director" OR "Head" OR "Senior"'
+    notes: "NYC. NBA Media, NBA TV, NBA.com. Tech-forward league with strong digital/AI content strategy."
+    enabled: true
+
+  - name: MLB (Major League Baseball)
+    careers_url: https://job-boards.greenhouse.io/majorleaguebaseball
+    scan_method: websearch
+    scan_query: '"MLB" OR "major league baseball" careers "AI" OR "content" OR "production" OR "media" "VP" OR "Director" OR "Head" OR "Senior"'
+    notes: "NYC. MLB Network, MLB.com. Strong digital content and AI analytics operation."
+    enabled: true
+
+  - name: NHL (National Hockey League)
+    careers_url: https://www.nhl.com/info/careers
+    scan_method: websearch
+    scan_query: '"NHL" OR "national hockey league" careers "AI" OR "content" OR "production" OR "media" "VP" OR "Director" OR "Head" OR "Senior"'
+    notes: "NYC. NHL Network, NHL.com. Growing digital content operation."
+    enabled: true
+
+  - name: MLS (Major League Soccer)
+    careers_url: https://www.mlssoccer.com/careers
+    scan_method: websearch
+    scan_query: '"MLS" OR "major league soccer" careers "AI" OR "content" OR "production" OR "media" "VP" OR "Director" OR "Head" OR "Senior"'
+    notes: "NYC. MLS Season Pass on Apple TV. Fastest-growing US sports league with strong media deals."
+    enabled: true
+
+  - name: NWSL (National Women's Soccer League)
+    careers_url: https://www.nwslsoccer.com/careers
+    scan_method: websearch
+    scan_query: '"NWSL" OR "national women''s soccer league" careers "AI" OR "content" OR "production" OR "media" "VP" OR "Director" OR "Head"'
+    notes: "NYC. Fastest-growing women's sports property. CBS, ESPN, Prime Video broadcast deals."
+    enabled: true
+
+  - name: WNBA (Women's National Basketball Association)
+    careers_url: https://careers.nba.com
+    scan_method: websearch
+    scan_query: '"WNBA" careers "AI" OR "content" OR "production" OR "media" "VP" OR "Director" OR "Head"'
+    notes: "NYC. Part of NBA operations. Record viewership growth. Strong content expansion."
+    enabled: true
+
+  - name: NWHL / PHF / PWHL (Professional Women's Hockey)
+    careers_url: https://www.thepwhl.com/en/careers
+    scan_method: websearch
+    scan_query: '"PWHL" OR "professional women''s hockey" careers "content" OR "media" OR "production" OR "AI" "VP" OR "Director" OR "Head"'
+    notes: "NYC/various. Professional Women's Hockey League. Fast-growing, building media operation."
+    enabled: true
+
+  - name: LPGA (Ladies Professional Golf Association)
+    careers_url: https://www.lpga.com/careers
+    scan_method: websearch
+    scan_query: '"LPGA" careers "AI" OR "content" OR "production" OR "media" "VP" OR "Director" OR "Head"'
+    notes: "Daytona Beach/Remote. Growing media and content operation. NBC/Golf Channel broadcast."
+    enabled: true
+
+  - name: US Soccer Federation
+    careers_url: https://www.ussoccer.com/careers
+    scan_method: websearch
+    scan_query: '"US Soccer" OR "USSF" careers "AI" OR "content" OR "production" OR "media" "VP" OR "Director" OR "Head"'
+    notes: "Chicago/NYC. USMNT + USWNT. World Cup 2026 host - massive content build-up."
+    enabled: true
+
+  - name: Formula 1
+    careers_url: https://www.formula1.com/en/latest/article/formula-1-careers.html
+    scan_method: websearch
+    scan_query: '"Formula 1" OR "F1" OR "Formula One" careers "AI" OR "content" OR "production" OR "media" OR "digital" "VP" OR "Director" OR "Head" OR "Senior"'
+    notes: "London/NYC/Remote. F1 Media has exploded since Drive to Survive. Huge AI content investment. Liberty Media ownership."
+    enabled: true
+
+  - name: F1 TV / Formula One Management
+    careers_url: https://www.fom.com/careers
+    scan_method: websearch
+    scan_query: '"FOM" OR "Formula One Management" OR "F1 TV" careers "AI" OR "content" OR "production" OR "media" OR "streaming" "VP" OR "Director" OR "Head"'
+    notes: "London/Austin/Remote. F1's own media arm - F1 TV, social, documentaries."
+    enabled: true
+
+  - name: ESPN / ESPN Films
+    careers_url: https://jobs.disneycareers.com
+    scan_method: websearch
+    scan_query: '"ESPN" careers "AI" OR "content" OR "production" OR "media" OR "post-production" "VP" OR "Director" OR "Head" OR "Senior"'
+    notes: "Bristol CT/NYC. ESPN, ESPN+, ESPN Films (30 for 30). Part of Disney. Huge sports content operation."
+    enabled: true
+
+  - name: Turner Sports / TNT Sports (Warner Bros. Discovery)
+    careers_url: https://careers.wbd.com
+    scan_method: websearch
+    scan_query: '"Turner Sports" OR "TNT Sports" OR "Bleacher Report" OR "B/R" careers "AI" OR "content" OR "production" OR "media" "VP" OR "Director" OR "Head"'
+    notes: "Atlanta/NYC. TNT Sports, Bleacher Report, B/R Open Run. WBD sports content operation."
+    enabled: true
+
+  - name: NBC Sports / Peacock Sports
+    careers_url: https://www.nbcunicareers.com
+    scan_method: websearch
+    scan_query: '"NBC Sports" OR "Peacock" careers "AI" OR "content" OR "production" OR "media" "VP" OR "Director" OR "Head"'
+    notes: "Stamford CT/NYC. NBC Sports, Peacock. Olympics, NFL, Premier League broadcasts."
+    enabled: true
+
+  - name: Amazon Prime Video Sports
+    careers_url: https://www.amazon.jobs
+    scan_method: websearch
+    scan_query: 'site:amazon.jobs "Prime Video Sports" OR "sports" "AI" OR "content" OR "production" OR "media" "VP" OR "Director" OR "Head"'
+    notes: "Seattle/NYC. Thursday Night Football, NBA starting 2025. Big sports content expansion."
+    enabled: true
+
+  - name: Apple Sports / MLS Season Pass
+    careers_url: https://www.apple.com/careers/us/
+    scan_method: websearch
+    scan_query: 'site:jobs.apple.com "sports" OR "MLS" OR "Apple Sports" "AI" OR "content" OR "production" OR "media" "VP" OR "Director" OR "Head"'
+    notes: "Cupertino/NYC. MLS Season Pass, Apple Sports app, Friday Night Baseball. Growing sports media arm."
+    enabled: true
+
+  # ── ADDED 2026-10-08 from the first routine run's board discovery ───────────
+
+  - name: MLB Network
+    careers_url: https://job-boards.greenhouse.io/mlbnetwork
+    scan_method: api
+    notes: "Secaucus NJ. MLB's network and production arm."
+    enabled: true
+
+  - name: WPP Media
+    careers_url: https://job-boards.greenhouse.io/wppmedia
+    scan_method: api
+    notes: "WPP media agencies board."
+    enabled: true
+
+  - name: WPP Production (Hogarth)
+    careers_url: https://job-boards.greenhouse.io/wppproduction
+    scan_method: api
+    notes: "Hogarth and WPP production arm."
+    enabled: true
+
+  - name: MrBeast
+    careers_url: https://job-boards.greenhouse.io/mrbeastyoutube
+    scan_method: api
+    notes: "Creator-led studio; NYC and NC. VP Strategic Accounts roles seen 2026-10."
+    enabled: true
+
+  - name: Conveo
+    careers_url: https://jobs.ashbyhq.com/conveo
+    scan_method: api
+    notes: "AI startup, NYC, $50M Series A 2026. Head of Video seen 2026-10."
+    enabled: true
+
+  - name: Veho
+    careers_url: https://jobs.ashbyhq.com/veho-tech-inc
+    scan_method: api
+    notes: "Logistics tech, NYC. VP AI and Platforms seen 2026-10."
+    enabled: true
+
+  - name: Morning Brew
+    careers_url: https://jobs.lever.co/morningbrew
+    scan_method: api
+    notes: "Business media, NYC. VP Multimedia applied 2026-10."
+    enabled: true
+
+  # ── ADDED 2026-10-08: media, publishers, sports, streamers (verified by research) ──
+
+  - name: Vox Media
+    careers_url: https://job-boards.greenhouse.io/voxmedia
+    scan_method: api
+    ats: Greenhouse
+    notes: "NYC. The Verge, Vulture, New York Magazine, Eater, SB Nation, Vox, podcasts and video. 15 open roles today, mostly NYC. Greenhouse board verified."
+    enabled: true
+
+  - name: Hearst
+    careers_url: https://careers.hearst.com/
+    scan_method: scrub
+    ats: Unverified (careers.hearst.com unreachable from this environment)
+    notes: "NYC. Hearst Magazines, Hearst Television, Hearst Newspapers. Greenhouse board hearst exists but holds only UAT test postings, which suggests a Greenhouse migration in progress. Recheck slug hearst in a month."
+    enabled: true
+
+  - name: Conde Nast
+    careers_url: https://condenast.wd115.myworkdayjobs.com/CondeCareers
+    scan_method: scrub
+    ats: Workday
+    notes: "NYC (1 WTC). Vogue, GQ, The New Yorker, Wired, Conde Nast Entertainment video. 132 open roles. Workday tenant verified."
+    enabled: true
+
+  - name: The New York Times
+    careers_url: https://job-boards.greenhouse.io/thenewyorktimes
+    scan_method: api
+    ats: Greenhouse
+    notes: "NYC. Newsroom, NYT Audio, NYT Video, The Athletic, Wirecutter, Games. 138 open roles. Greenhouse board verified (slug is thenewyorktimes, not nytimes)."
+    enabled: true
+
+  - name: Bloomberg LP
+    careers_url: https://bloomberg.avature.net/careers/SearchJobs
+    scan_method: scrub
+    ats: Avature
+    notes: "NYC. Bloomberg Media (TV, Originals, podcasts, Quicktake video). careers.bloomberg.com blocks bots; the Avature search page returns listings. Filter on Media and News."
+    enabled: true
+
+  - name: Complex Networks
+    careers_url: https://jobs.lever.co/Complex
+    scan_method: api
+    ats: Lever
+    notes: "NYC and LA. Complex, First We Feast, ComplexCon; owned by NTWRK. 27 open roles including Associate Director, Post Production today. Lever slug is case-sensitive: Complex."
+    enabled: true
+
+  - name: BuzzFeed
+    careers_url: https://www.buzzfeed.com/about/jobs
+    scan_method: scrub
+    ats: Unverified (Greenhouse board buzzfeed returns 404; site points to a Beamery talent community)
+    notes: "NYC. BuzzFeed, HuffPost, Tasty, First We Feast sold. No live public board found today; openings page loops back to itself. Low volume, keep for the scrub."
+    enabled: true
+
+  - name: Barstool Sports
+    careers_url: https://job-boards.greenhouse.io/barstoolsports
+    scan_method: api
+    ats: Greenhouse
+    notes: "NYC and Chicago. Podcasts, video, live. 4 open roles today, mostly freelance producers and editors in Chicago. Greenhouse board verified."
+    enabled: true
+
+  - name: iHeartMedia
+    careers_url: https://iheartmedia.wd5.myworkdayjobs.com/External_iHM
+    scan_method: scrub
+    ats: Workday
+    notes: "NYC HQ, stations nationwide. Radio, iHeartPodcasts (largest podcast publisher), audio production. 300 open roles, most are station sales. Workday tenant verified."
+    enabled: true
+
+  - name: SiriusXM
+    careers_url: https://careers.siriusxm.com/careers/search/
+    scan_method: scrub
+    ats: iCIMS (Jibe front end)
+    notes: "NYC. SiriusXM, Pandora, SXM Media podcasts (Conan, Crooked, Unwell). 64 open roles via the Jibe API at careers.siriusxm.com/api/jobs. The raw iCIMS portal uscareers-siriusxmradio.icims.com returns no results, use the Jibe search page."
+    enabled: true
+
+  - name: Audacy
+    careers_url: https://careers-audacy.icims.com/jobs/search
+    scan_method: scrub
+    ats: iCIMS
+    notes: "Philadelphia HQ, NYC presence. Radio, Audacy podcasts (Cadence13, Pineapple Street). iCIMS portal verified with listings, mostly station roles."
+    enabled: true
+
+  - name: Tubi (Fox)
+    careers_url: https://job-boards.greenhouse.io/tubitv
+    scan_method: api
+    ats: Greenhouse
+    notes: "SF HQ, LA and NYC hybrid. Fox-owned FAST streamer, growing Originals slate. 29 open roles including Creative Producer, Originals today. Slug is tubitv (slug tubi is a one-job campus board)."
+    enabled: true
+
+  - name: Roku
+    careers_url: https://job-boards.greenhouse.io/roku
+    scan_method: api
+    ats: Greenhouse
+    notes: "San Jose HQ, NYC office. Roku Channel, Roku Originals, ad platform. 176 open roles. Greenhouse board verified."
+    enabled: true
+
+  - name: Fubo
+    careers_url: https://job-boards.greenhouse.io/fubotv
+    scan_method: api
+    ats: Greenhouse
+    notes: "NYC. Sports-first vMVPD, merging with Hulu Live under Disney control. 6 open roles today, all NYC, mostly engineering and finance. Slug is fubotv."
+    enabled: true
+
+  - name: Crunchyroll
+    careers_url: https://job-boards.greenhouse.io/crunchyroll
+    scan_method: api
+    ats: Greenhouse
+    notes: "LA and Dallas, Sony-owned. Anime streaming, dubbing and localization operations, co-productions. 93 open roles including producer and localization tracks. Greenhouse board verified."
+    enabled: true
+
+  - name: WWE / TKO Group
+    careers_url: https://wwecorp.wd5.myworkdayjobs.com/TKO
+    scan_method: scrub
+    ats: Workday
+    notes: "Stamford CT and NYC. WWE, UFC, Zuffa Boxing, On Location. TKO site has 84 roles; WWE-specific site wwecorp.wd5.myworkdayjobs.com/wwecorp has 13. WWE runs a large in-house post and media operations group."
+    enabled: true
+
+  - name: Madison Square Garden Entertainment
+    careers_url: https://www.msgentertainment.com/jobs/
+    scan_method: scrub
+    ats: Greenhouse (board slug not exposed; jobs served through the WordPress site with gh_jid links)
+    notes: "NYC. The Garden, Radio City, Beacon, Chicago Theatre, Christmas Spectacular. Sister companies have verified boards: MSG Sports at job-boards.greenhouse.io/msgsports, Sphere Entertainment at job-boards.greenhouse.io/sphereentertainment (MSG Networks sits under Sphere)."
+    enabled: true
+
+  - name: NBA
+    careers_url: https://careers.nba.com/search-results
+    scan_method: scrub
+    ats: Phenom
+    notes: "NYC (Olympic Tower) and Secaucus NJ. NBA Entertainment and the NBA Content group run league media, post and the Secaucus replay and production center. 48 open roles today including a Local Game Production Supervisor."
+    enabled: true
+
+  - name: Dotdash Meredith (People Inc.)
+    careers_url: https://meredith.wd5.myworkdayjobs.com/EXT
+    scan_method: scrub
+    ats: Workday
+    notes: "NYC (225 Liberty). Rebranded to People Inc.; careers site now people.inc/careers. People, Food & Wine, Travel + Leisure, Investopedia, video studios. 41 open roles. Workday tenant verified."
+    enabled: true
+
+  - name: Penske Media
+    careers_url: https://job-boards.greenhouse.io/pmc
+    scan_method: api
+    ats: Greenhouse
+    notes: "NYC and LA. Rolling Stone, Variety, Billboard, Deadline, The Hollywood Reporter, WWD, Life is Beautiful, SXSW stake. 36 open roles including branded content producers. Slug is pmc."
+    enabled: true
+
+  - name: Hello Sunshine
+    careers_url: https://apply.workable.com/hello-sunshine/
+    scan_method: scrub
+    ats: Workable
+    notes: "LA, Candle Media. Reese Witherspoon's studio: scripted and unscripted TV, film, Reese's Book Club. Workable page titled Hello Sunshine - Current Openings exists; job count could not be confirmed today (Workable rate limited the proxy)."
+    enabled: true
+
+  - name: Wondery (Amazon)
+    careers_url: https://www.amazon.jobs/en/search?base_query=Wondery
+    scan_method: scrub
+    ats: Amazon Jobs (custom)
+    notes: "LA (Culver City) and NYC. Wondery was folded into Amazon Music and Audible in 2025; the search returns 6 roles today, all Amazon Music Creator Services. Low expectation of post-production roles."
+    enabled: true
+
+  - name: Industrial Light & Magic (Disney)
+    careers_url: https://www.disneycareers.com/lucasfilm-ilm-jobs
+    scan_method: scrub
+    ats: Radancy (Disney Careers front end over Workday)
+    notes: "SF HQ with studios in London, Vancouver, Sydney, Mumbai. VFX, virtual production (StageCraft), ILM Immersive. Vanity URL redirects to a Disney Careers search filtered to Lucasfilm and ILM; listings verified. Underlying Workday tenant is disney.wd5.myworkdayjobs.com/disneycareer."
+    enabled: true
+
+  - name: Lionsgate
+    careers_url: https://jobs.lionsgate.com/search/?q=
+    scan_method: scrub
+    ats: SAP SuccessFactors
+    notes: "Santa Monica HQ, NYC office. Lionsgate Studios (film and TV), separated from Starz in 2025. Search page returns listings, mostly Santa Monica."
+    enabled: true
+
+  - name: AMC Networks
+    careers_url: https://amcn.wd5.myworkdayjobs.com/amcnetworks
+    scan_method: scrub
+    ats: Workday
+    notes: "NYC. AMC, AMC+, Shudder, Acorn TV, IFC, BBC America. Corporate site now redirects to amcglobalmedia.com. 23 open roles. Workday tenant verified."
+    enabled: true
+
+  - name: Fox Corporation
+    careers_url: https://www.foxcareers.com/Search/SearchResults
+    scan_method: scrub
+    ats: Custom (foxcareers.com, Workday-style R500 requisition ids)
+    notes: "NYC (Fox News Media, 1211 6th Ave) and LA (Fox Entertainment, Fox Sports). Search results page returns listings across Fox News Media, Fox Corporation, Fox Sports. Tubi tracked separately."
+    enabled: true
+
+  - name: Versant Media
+    careers_url: https://careers.versantmedia.com/
+    scan_method: scrub
+    ats: SmartRecruiters (company id Versant3)
+    notes: "NYC. NBCU cable spinoff: CNBC, MSNBC (MS NOW), USA, Oxygen, E!, Syfy, Golf Channel, GolfNow, Fandango, Rotten Tomatoes. 195 open roles via api.smartrecruiters.com/v1/companies/Versant3/postings. Strong fit for linear and digital content operations."
+    enabled: true
+
+  - name: Paramount Skydance
+    careers_url: https://careers.paramount.com/search/?q=
+    scan_method: scrub
+    ats: SAP SuccessFactors
+    notes: "NYC (1515 Broadway) and LA. CBS, Paramount+, MTV, Nickelodeon, Showtime, Paramount Pictures. careers.paramount.com still applies post-Skydance merger and returns listings today."
+    enabled: true
+
+  - name: Warner Music Group
+    careers_url: https://wmg.wd1.myworkdayjobs.com/WMGUS
+    scan_method: scrub
+    ats: Workday (US) plus Lever for international
+    enabled: true
+
+  - name: TelevisaUnivision
+    careers_url: https://univision.wd1.myworkdayjobs.com/External
+    scan_method: scrub
+    ats: Workday
+    notes: "Miami and NYC, Mexico City. Univision, UniMas, ViX streaming, large news and production operations. 108 open roles. careers.televisaunivision.com is unreachable from this environment, the Workday tenant is verified."
+    enabled: true
+
+  - name: Scripps
+    careers_url: https://scripps.wd115.myworkdayjobs.com/Scripps_Careers
+    scan_method: scrub
+    ats: Workday
+    notes: "Cincinnati HQ, NYC presence for Scripps News and ION. Local stations, Scripps Sports, ION network. 64 open roles. Workday tenant verified."
+    enabled: true
+
+  - name: Nexstar
+    careers_url: https://nexstar.wd5.myworkdayjobs.com/nexstar
+    scan_method: scrub
+    ats: Workday
+    notes: "Irving TX HQ, NYC for NewsNation, The CW, WPIX. Largest local TV group, acquiring Tegna. 624 open roles, mostly station level. Workday tenant verified."
+    enabled: true
+
+  - name: Gray Media
+    careers_url: https://recruiting.ultipro.com/GRA1017GRYT/JobBoard/ae441110-89bd-444d-8ad2-b76c7b9db7a9/
+    scan_method: scrub
+    ats: UKG Pro (UltiPro)
+    notes: "Atlanta HQ. Local TV stations, Assembly Studios production campus. 503 open roles, nearly all station level. UltiPro board verified."
+    enabled: true
+
+  - name: Sinclair
+    careers_url: https://edyy.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2002
+    scan_method: scrub
+    ats: Oracle HCM Cloud
+    notes: "Hunt Valley MD HQ. Local TV stations, Tennis Channel, Sinclair Ventures. 400 open roles, mostly station level. Oracle site CX_2002 verified via the recruiting API."
+    enabled: true
+
+  - name: Bustle Digital Group
+    careers_url: https://jobs.lever.co/BDG
+    scan_method: api
+    ats: Lever
+    notes: "NYC and LA. Bustle, Nylon, Elite Daily, Romper, W, Inverse. 15 open roles today, mostly sales. Lever slug is case-sensitive: BDG."
+    enabled: true

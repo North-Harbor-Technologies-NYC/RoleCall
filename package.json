@@ -1,0 +1,11 @@
+{
+  "name": "rolecall",
+  "private": true,
+  "version": "0.1.0",
+  "description": "RoleCall: job-search config, routine skills, feed, and dashboard",
+  "type": "module",
+  "dependencies": {
+    "docx": "^9.9.0",
+    "js-yaml": "^4.1.1"
+  }
+}

@@ -1,0 +1,91 @@
+# Inbound email feeds. Audited from one week of a real inbox; the senders below are the ones worth reading.
+# ~200 threads/week matched a broad job-alert query. The routine reads only the senders below.
+# Every listing from any feed must be resolved to its canonical posting (company ATS or
+# careers page) before it is scored. See `resolution` at the bottom.
+
+feeds:
+  - id: linkedin_alerts
+    senders: [jobalerts-noreply@linkedin.com, jobs-noreply@linkedin.com]
+    quality: high
+    notes: >
+      Best signal in the inbox. Saved-search alerts and "jobs similar to" digests.
+      Links go to linkedin.com/jobs/view/... which often require login and sometimes
+      expire; resolve to the company posting. Observed this week: Sesame Workshop
+      Director Production Technology, Versant Media VP Product and Design, Veho VP AI
+      and Platforms, BNY SVP AI Strategy Lead, Horizon Next VP Managing Director,
+      Scale AI VP Research, MLS Director Creators, Critical Mass SVP, AREA 23 SVP.
+    handling: parse every listing; apply blockers; resolve; score survivors.
+
+  - id: ladders
+    senders: [jobs@my.theladders.com, jobs@inform.theladders.com]
+    quality: medium-low
+    notes: >
+      Paywalled. Salary figures marked with * are Ladders estimates, not posted ranges.
+      Upsell mail from inform.theladders.com is pure marketing. Real roles do appear
+      (Disney VP Producing and Development, NBCU, NYT, Coinbase Senior Producer) but the
+      link lands on a paywall. Resolve by company and title on the company site.
+    handling: parse listings from my.theladders.com only; ignore inform.theladders.com; resolve; never trust the salary.
+
+  - id: lensa
+    senders: [jobalert@lensa.com, "*@lensa.com"]
+    quality: low
+    notes: >
+      Scraper aggregator. Alerts are keyed to "Post Production Supervisor" and "Head Video
+      Director" searches and return junk (FedEx print production, $57K supervisor roles,
+      "Junior Post-Production Expert"). Occasional real item (WBD Post Production
+      Enablement Supervisor, NBA) that LinkedIn also carries.
+    handling: parse; expect most items to fail blockers; resolve only survivors; log the sender so the owner can decide whether to unsubscribe.
+
+  - id: indeed_match
+    senders: [donotreply@match.indeed.com]
+    quality: low
+    notes: >
+      "Your background could be a match" mail. Observed items are IC producer roles well
+      below target (Freelance Line Producer at Complex, Video Producer at Persistent).
+    handling: parse; blockers will remove nearly all; log counts only.
+
+  - id: hollylist
+    senders: [no-reply@hollylist.com]
+    quality: medium
+    notes: >
+      Daily entertainment job digest, mostly crew and coordinator level, occasionally
+      post-production leadership at production companies. Links go to the Hollylist
+      database, which may require membership.
+    handling: parse; apply blockers; resolve survivors.
+
+  - id: productionhub
+    senders: [email@productionhub.com]
+    quality: none
+    notes: Newsletter, not job alerts. Skip.
+    handling: ignore.
+
+ignore_senders:
+  - editors-noreply@linkedin.com      # LinkedIn News
+  - messages-noreply@linkedin.com     # LinkedIn Learning
+  - notifications-noreply@linkedin.com
+  - invitations@linkedin.com
+  - linkedin@em.linkedin.com
+  - jobs@inform.theladders.com        # Ladders upsell
+
+# Alerts the owner should consider adding, because the current feeds miss the companies in
+# portals/portals.yml almost entirely: direct alerts on the Disney, NBCU, WBD, Netflix,
+# Amazon, Paramount career sites; Built In NYC; Welcome to the Jungle (formerly Otta).
+# None of these are in the inbox today. Decision pending.
+
+resolution:
+  goal: Replace the alert link with the canonical posting URL and confirm it is live.
+  steps:
+    - Extract company, title, location from the alert item.
+    - If the company is in portals/portals.yml with an Ashby, Greenhouse, or Lever board, query the board API by title.
+    - Else search the company's careers site for the exact title (web search, then fetch).
+    - Confirm the posting is live: apply control present, no "no longer accepting" text, posted date if visible.
+    - Record the canonical URL, the source alert, and a resolution status.
+  statuses:
+    resolved: canonical URL found and live
+    expired: canonical posting found but closed
+    paywalled: only an aggregator copy found, original not located
+    unresolved: nothing found
+  digest_rule: >
+    Every item at 3.5+ shows its resolution status. Expired, paywalled, and unresolved
+    items are listed in a separate "Could not verify" section with what was tried, so
+    the owner can decide whether to chase them by hand.

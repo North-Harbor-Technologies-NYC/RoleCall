@@ -1,0 +1,362 @@
+# Hard filters. Applied to every inbound role BEFORE any scoring or LLM evaluation.
+# A role that trips any `hard` rule is logged to the tracker as SKIP with the rule id
+# and gets no further tokens. `soft` rules do not block; they are passed to the
+# evaluator as flags and cost points in the rubric.
+#
+# Source: profile/positioning.md (Location Scoring Rules, What to Penalize) and the
+# title_filter in portals/portals.yml. Keep the two in sync.
+
+hard:
+  - id: seniority_required
+    why: Director and above only. The positive title filter in portals.yml lets IC titles through on words like Production and AI; this gate closes that. Forwards from the owner bypass it.
+    require_any_in: [title]
+    patterns:
+      - VP
+      - Vice President
+      - SVP
+      - EVP
+      - Head of
+      - Head,
+      - Director
+      - Managing Director
+      - Chief
+      - President
+      - Executive Producer
+      - Principal
+      - Managing Partner
+      - Executive Producer
+      - Post Production Lead
+      - Post-Production Lead
+      - Lead Post Production
+      - Lead, Post Production
+      - Head,
+      # secondary archetype titles (Enterprise AE, solutions)
+      - Account Executive
+      - Account Director
+      - Strategic Account
+      - Enterprise Account
+      - Solutions Architect
+      - Solutions Consultant
+      - Creative Workflow Architect
+
+  - id: location_non_us
+    why: Home country only, no relocation. Edit for your search.
+    match_any_in: [title, location, description]
+    patterns:
+      - EMEA
+      - APAC
+      - LATAM
+      - Latin America
+      - Middle East
+      - Southeast Asia
+      - North Asia
+      - ANZ
+      - Oceania
+      - DACH
+      - London
+      - Munich
+      - Paris
+      - Berlin
+      - Amsterdam
+      - Zurich
+      - Zürich
+      - Singapore
+      - Tokyo
+      - Sydney
+      - Dublin
+      - Netherlands
+      - Benelux
+      - United Kingdom
+      - "UK/I"
+      - Europe
+      - Australia
+      - Brazil
+      - Mexico
+      - Argentina
+      - Buenos Aires
+      - Chile
+      - Spain
+      - France
+      - Germany
+      - India
+      - Canada
+      - Toronto
+      - Vancouver
+      - Korea
+      - Japan
+      - Belgium
+      - Italy
+      - Sweden
+      - Nordics
+      - Poland
+      - Ireland
+      - Portugal
+      - Israel
+      - Switzerland
+      - Denmark
+      - Norway
+      - Finland
+      - Saudi Arabia
+      - UAE
+      - United Arab Emirates
+      - Dubai
+      - Abu Dhabi
+      - Qatar
+      - Pakistan
+      - Karachi
+      - Thailand
+      - Bangkok
+      - Malaysia
+      - Kuala Lumpur
+      - Serbia
+      - Belgrade
+      - South Africa
+      - Cape Town
+      - Colombia
+      - Bogota
+      - Indonesia
+      - Jakarta
+      - Vietnam
+      - Ho Chi Minh
+      - Taiwan
+      - Stockholm
+      - Bangalore
+      - MENA
+
+  - id: language_requirement
+    why: Non-English language requirement signals a regional role.
+    match_any_in: [title, description]
+    patterns:
+      - German Speaking
+      - German-speaking
+      - French Speaking
+      - French-speaking
+      - Italian Speaking
+      - Spanish Speaking
+      - Japanese Speaking
+      - Fluent in Japanese
+      - Fluent in German
+      - Fluent in French
+      - Arabic
+      - native-level
+      - bilingual required
+
+  - id: onsite_west_coast
+    why: SF or LA with 4+ days on site and no flexibility is a hard blocker. Hybrid or flexible SF/LA is soft, see below.
+    match_all_in: [location, description]
+    patterns_all:
+      - ["San Francisco", "Los Angeles", "Bay Area", "Burbank", "Culver City", "Santa Monica", "Universal City", "Glendale", "Seattle", "Austin", "Denver", "Los Gatos", "Redwood City"]
+      - ["on-site 4", "onsite 4", "four days", "4 days", "5 days", "five days", "fully on-site", "fully onsite", "in-office 5", "in office 5", "must relocate", "relocation required"]
+
+  - id: onsite_outside_home_metro
+    why: Any office outside the home metro with 4 or more days on site is a hard blocker. Put your own metro terms in location_none_of. Needs the JD, so the evaluator applies it after the JD fetch; the feed scan cannot.
+    match_all_in: [location, description]
+    patterns_all:
+      - ["on-site 4", "onsite 4", "four days", "4 days", "5 days", "five days", "fully on-site", "fully onsite", "in-office 4", "in office 4", "in-office 5", "in office 5", "must relocate", "relocation required", "relocation needed"]
+    location_none_of: ["New York", "NY", "NYC", "Manhattan", "Brooklyn", "Queens", "Jersey City", "Hoboken", "Stamford", "Remote", "Hybrid"]
+
+  - id: seniority_below_target
+    why: IC or coordinator level, two or more levels below target.
+    match_any_in: [title]
+    patterns:
+      - Junior
+      - Associate
+      - Intern
+      - Coordinator
+      - Assistant Editor
+      - Staff Editor
+      - Production Manager
+      - Deputy Managing Editor
+      - Executive Assistant
+      - Customer Support Specialist
+      - Support Specialist
+      - Analyst
+      - Supervisor
+      - Group Manager
+      - Lead Post
+
+  - id: engineering_or_research_ic
+    why: Pure engineering or research role with no team leadership component.
+    match_any_in: [title]
+    patterns:
+      - Software Engineer
+      - Backend Engineer
+      - Frontend Engineer
+      - Research Engineer
+      - Staff Engineer
+      - Infrastructure Engineer
+      - Inference Engineer
+      - Member of Technical Staff
+      - ML Engineer
+      - Machine Learning Engineer
+      - Data Engineer
+      - Data Scientist
+      - Platform Engineer
+      - Security Engineer
+      - QA Engineer
+      - Site Reliability
+      - DevOps
+      - Researcher
+      - Solutions Engineer
+      - Deployment Strategist
+      - Embedded
+      - Blockchain
+      - Web3
+      - Crypto
+      - Research Scientist
+      - Applied AI Engineer
+      - Engineering Manager
+      - Systems Engineer
+      - Scientist
+
+  - id: wrong_function
+    why: Functions outside the target archetypes.
+    match_any_in: [title]
+    patterns:
+      - Product Marketing
+      - Brand Marketing
+      - Growth Marketing
+      - Performance Marketing
+      - Product Designer
+      - Commercial Counsel
+      - Legal
+      - Compliance
+      - Finance Director
+      - Controller
+      - Procurement
+      - Healthcare
+      - Clinical
+      - GTM Enablement
+      - Government
+      - Marketing Operations
+      - Marketing Ops
+      - Martech
+      - Marketing Science
+      - Marketing & Communications
+      - Print Production
+      - Product Management
+      - Product Support
+      - Product Experience
+      - Product and Design
+      - Product Design
+      - Developer Experience
+      - Data Management
+      - Chief of Staff
+      - Client Investment
+      - Client Business Lead
+      - Internship
+      - Assistant to
+      - Line Producer
+      - Editorial Producer
+      - Annotation
+      - BDR
+      - Recruiter
+      - Sourcer
+      - Litigation
+      - Strategic Finance
+      - Events and Experiences
+      - Paid Media
+      - Advertising Account Executive
+      - Talent Acquisition
+      - Talent Strategy
+      - People,
+      - People &
+      - People and
+      - FP&A
+      - Accounting
+      - Accounts Payable
+      - Treasury
+      - Finance
+      - Apparel
+      - Insights
+      - Social Media
+      - Mobile Marketing
+      - Corporate Communications
+      - Analytics
+      - Measurement
+      - Programmatic
+      - SEO
+      - Influencer
+      - Customer Experience
+      - Platform Integrity
+      - Investment
+      - Flag Football
+      - Lighting Director
+      - Sourcing
+      - Employee Tech
+      - Packaging
+      - Live Stream
+      - Technical Director
+      - Managed Services
+      - Industrial
+      - Editorial Booking
+      - Settlement
+      - Commerce,
+      - Commercial Finance
+      - 3PL
+      - Last Mile
+      - Marketplace
+      - Order Management
+      - Billing
+      - Alliance Sales
+      - Partner Director
+      - Client Partner
+      - Agency Partner
+      - VP Product
+      - VP of Product
+      - VP, Product
+      - Director of Product
+      - Director, Product
+      - Head of Product
+      - SVP, Product
+      - Product -
+      - Product (
+      - Engineer, Product
+      - Product & Design
+      - Product and Design
+
+  - id: wrong_deal_level
+    why: Enterprise or strategic accounts only, when the role is a sales track.
+    match_any_in: [title]
+    patterns:
+      - SMB
+      - Mid-Market
+      - Mid Market
+      - Commercial Account Executive
+
+soft:
+  - id: comp_below_floor
+    why: Stated base below the floor in profile/profile.yml. Flag, do not block, because many postings understate.
+    rule: if a base salary or range is stated and its top is below profile.compensation.minimum, flag.
+
+  - id: west_coast_flexible
+    why: SF or LA with hybrid or flexible attendance scores 2.5/5 on location, per positioning.md.
+    match_any_in: [location]
+    patterns: ["San Francisco", "Los Angeles", "Bay Area", "Burbank", "Culver City", "Santa Monica"]
+
+  - id: customer_success
+    why: CS is not a primary archetype. Evaluate only if Director+ and enterprise.
+    match_any_in: [title]
+    patterns: ["Customer Success"]
+
+  - id: creative_director
+    why: Usually brand or campaign creative, a different track. Evaluate only if production or content operations is in scope.
+    match_any_in: [title]
+    patterns: ["Creative Director"]
+
+  - id: mba_required
+    why: MBA as a hard requirement, not preferred.
+    match_any_in: [description]
+    patterns: ["MBA required", "MBA is required", "must have an MBA"]
+
+  - id: ai_afterthought
+    why: Roles where AI is a roadmap item rather than the work.
+    rule: evaluator judgment from the JD text.
+
+  - id: aggregator_source
+    why: Roles sourced from LinkedIn Jobs, Indeed, Glassdoor, or Built In may be stale. Verify the original posting before scoring.
+    rule: flag when the source is an aggregator email rather than a company or ATS alert.
+
+# Title must also pass the positive filter in portals/portals.yml (at least one leadership,
+# AI, post-production, media operations, enterprise sales, or advisory keyword) unless it
+# arrived by direct forward from the owner, which bypasses the title filter.

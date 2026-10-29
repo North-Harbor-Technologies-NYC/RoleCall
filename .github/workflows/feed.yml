@@ -1,0 +1,45 @@
+# Daily zero-token job feed. Runs portals/scan.mjs and commits feeds/latest.json plus a dated copy to main.
+# Schedule is UTC: 14:45 is 10:45 AM Eastern during daylight time and 9:45 AM during standard time,
+# either way before the 11:30 AM routine clones the repo. Run it by hand from the Actions tab (workflow_dispatch).
+name: feed
+
+on:
+  schedule:
+    - cron: '45 14 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: feed
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --omit=dev
+      - name: Scan boards and career sites
+        run: node portals/scan.mjs
+      - name: Commit the feed
+        run: |
+          git config user.name "rolecall feed"
+          git config user.email "rolecall-feed@users.noreply.github.com"
+          git add feeds/
+          if git diff --cached --quiet; then echo "no feed change"; exit 0; fi
+          git commit -m "feed: $(date -u +%Y-%m-%d)"
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: Post the feed to the RoleCall dashboard
+        if: always()
+        env:
+          ROLECALL_URL: ${{ secrets.ROLECALL_URL }}
+          ROLECALL_TOKEN: ${{ secrets.ROLECALL_TOKEN }}
+        run: node scripts/rolecall.mjs feed feeds/latest.json

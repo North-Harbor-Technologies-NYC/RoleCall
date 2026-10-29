@@ -1,0 +1,87 @@
+# Zero-token scan targets for companies that are not on Ashby, Greenhouse, or Lever.
+# Read by portals/scan.mjs. Each entry names a provider in portals/providers/_ats.mjs and its parameters.
+# Methods come from the agentic scrubs of 2026-10-07 to 2026-10-13 (see portals/scrub-notes.md).
+# Companies that still need the agentic scrub (headless browser or search) are listed under `agentic:` at the bottom.
+# `exclude:` on an entry drops titles containing any of those words before filtering (local-station newsroom roles, mostly).
+
+targets:
+  # Studios and streamers
+  - name: Disney
+    scan: { provider: disney, pages: 8 }
+  - name: NBCUniversal
+    scan: { provider: smartrecruiters, company: NBCUniversal3 }
+  - name: Versant Media
+    scan: { provider: smartrecruiters, company: Versant3 }
+  - name: Netflix
+    scan: { provider: eightfold, host: explore.jobs.netflix.net, domain: netflix.com, pages: 6 }
+  - name: Paramount
+    scan: { provider: successfactors, host: careers.paramount.com, maxPages: 14 }
+  - name: Lionsgate
+    scan: { provider: successfactors, host: jobs.lionsgate.com, maxPages: 6, pageSize: 10 }
+  - name: Warner Bros. Discovery
+    scan: { provider: workday, host: warnerbros.wd5.myworkdayjobs.com, tenant: warnerbros, site: global }
+  - name: Amazon MGM Studios / Prime Video
+    scan: { provider: amazonjobs, queries: ["Prime Video", "Amazon MGM Studios", "Wondery", "Twitch", "studios content", "post production"], pages: 2 }
+  - name: A+E Networks
+    scan: { provider: workday, host: aenetworks.wd1.myworkdayjobs.com, tenant: aenetworks, site: AE-Careers }
+  - name: AMC Networks
+    scan: { provider: workday, host: amcn.wd5.myworkdayjobs.com, tenant: amcn, site: amcnetworks }
+  - name: Fox Corporation
+    scan: { provider: foxcareers, pages: 25 }
+    exclude: ["Executive Producer", "News", "Anchor", "Reporter", "Meteorologist", "Photojournalist"]
+  # Publishers, audio, broadcast
+  - name: Conde Nast
+    scan: { provider: workday, host: condenast.wd115.myworkdayjobs.com, tenant: condenast, site: CondeCareers }
+  - name: Bloomberg LP
+    scan: { provider: avature, host: bloomberg.avature.net, keywords: ["media", "video", "production", "content", "AI", "director", "head of"] }
+  - name: iHeartMedia
+    scan: { provider: workday, host: iheartmedia.wd5.myworkdayjobs.com, tenant: iheartmedia, site: External_iHM }
+  - name: SiriusXM
+    scan: { provider: jibe, host: careers.siriusxm.com }
+  - name: Audacy
+    scan: { provider: icims, host: careers-audacy.icims.com }
+    exclude: ["Executive Producer", "News", "Anchor", "Reporter", "Meteorologist", "Photojournalist"]
+  - name: WWE / TKO Group
+    scan: { provider: workday, host: wwecorp.wd5.myworkdayjobs.com, tenant: wwecorp, site: TKO }
+  - name: Dotdash Meredith (People Inc.)
+    scan: { provider: workday, host: meredith.wd5.myworkdayjobs.com, tenant: meredith, site: EXT }
+  - name: TelevisaUnivision
+    scan: { provider: workday, host: univision.wd1.myworkdayjobs.com, tenant: univision, site: External }
+    exclude: ["Executive Producer", "News", "Anchor", "Reporter", "Meteorologist", "Photojournalist"]
+  - name: Scripps
+    scan: { provider: workday, host: scripps.wd115.myworkdayjobs.com, tenant: scripps, site: Scripps_Careers }
+    exclude: ["Executive Producer", "News", "Anchor", "Reporter", "Meteorologist", "Photojournalist"]
+  - name: Nexstar
+    scan: { provider: workday, host: nexstar.wd5.myworkdayjobs.com, tenant: nexstar, site: nexstar }
+    exclude: ["Executive Producer", "News", "Anchor", "Reporter", "Meteorologist", "Photojournalist"]
+  - name: Gray Media
+    scan: { provider: ukgpro, company: GRA1017GRYT, board: ae441110-89bd-444d-8ad2-b76c7b9db7a9 }
+    exclude: ["Executive Producer", "News", "Anchor", "Reporter", "Meteorologist", "Photojournalist"]
+  - name: Sinclair
+    scan: { provider: oraclehcm, host: edyy.fa.us2.oraclecloud.com, site: CX_2002, keywords: ["director", "vice president", "head", "content", "production", "media", "AI", "broadcast"] }
+    exclude: ["Executive Producer", "News", "Anchor", "Reporter", "Meteorologist", "Photojournalist"]
+  - name: Warner Music Group
+    scan: { provider: workday, host: wmg.wd1.myworkdayjobs.com, tenant: wmg, site: WMGUS }
+  # Sports
+  - name: NBA
+    scan: { provider: workday, host: nba.wd108.myworkdayjobs.com, tenant: nba, site: nbacareers }
+  - name: MLS
+    scan: { provider: icims, host: careers-mlssoccer.icims.com }
+  # Tech, agencies, tools
+  - name: Adobe
+    scan: { provider: workday, host: adobe.wd5.myworkdayjobs.com, tenant: adobe, site: external_experienced, searchText: "" , maxPages: 40 }
+  - name: Avid Technology
+    scan: { provider: workday, host: avid.wd5.myworkdayjobs.com, tenant: avid, site: Avid }
+  - name: Google / YouTube
+    scan: { provider: googlecareers, queries: ["media", "video", "content", "production", "YouTube", "creative", "entertainment", "generative"], level: DIRECTOR_PLUS, pages: 3 }
+  - name: Publicis Groupe
+    scan: { provider: jibe, host: careers.publicisgroupe.com, query: "&location=United%20States", maxPages: 10 }
+  - name: Accenture Song
+    scan: { provider: accenture, queries: ["media", "entertainment", "content", "creative", "generative AI", "production"] }
+  - name: Brightcove
+    scan: { provider: pinpoint, host: bendingspoons.pinpointhq.com, filter: brightcove }
+  - name: Backlight
+    scan: { provider: teamtailor, host: careers.backlight.co }
+
+# Still agentic (headless browser, cookie dance, or no stable endpoint). The intake skill scrubs these only.
+agentic: []   # companies the routine scrubs with tokens because no provider reads their site. Leave empty on a Pro plan.
