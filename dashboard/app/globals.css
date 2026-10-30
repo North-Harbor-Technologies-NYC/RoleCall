@@ -408,12 +408,21 @@ pre.raw { background: var(--rc-surface); border: 1px solid var(--rc-line); borde
   .signin .footer { flex-direction: column; gap: 12px; align-items: flex-start; }
   .fields { grid-template-columns: 1fr; }
   .kv { grid-template-columns: 120px 1fr; }
+  .kv dd { overflow-wrap: anywhere; }
+  .hist div { grid-template-columns: 1fr; gap: 2px; padding: 8px 0; }
+  .hist div span { overflow-wrap: anywhere; }
+  .jd, pre.raw { overflow-wrap: anywhere; }
 }
 @media (max-width: 599px) {
   .greet { font-size: 28px; line-height: 33px; }
   .headline { font-size: 16px; line-height: 24px; }
   .progress { margin: 20px 0 16px; }
   .match .head { padding: 16px 18px 0; }
+  .match .head .hrow { gap: 12px; }
+  .score-lg .n { font-size: 30px; line-height: 30px; }
+  .score-lg .segs i { width: 9px; height: 3px; }
+  .match, .maybe, .list, .surface, .needs, .meter, .railcard, .stats { max-width: 100%; min-width: 0; }
+  .match .meta, .maybe .meta, .list .co, .list .cell { overflow-wrap: anywhere; }
   .match h2 { font-size: 22px; line-height: 28px; }
   .match .meta { font-size: 15px; }
   .panels { grid-template-columns: 1fr; margin: 16px 18px 0; }

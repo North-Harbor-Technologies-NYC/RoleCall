@@ -17,6 +17,8 @@ export const JOBS: Job[] = [
     fit: "You would run Gartner's video, design, and brand teams, with a Head of Video Production reporting to you and a mandate to pilot AI in production, close to your last operation.",
     watch: 'Half the job is corporate brand stewardship, and the office is in Stamford.',
     checks: [{ text: "It asks for a bachelor's in design or similar; the master has no education line", done: false }, { text: 'The 2019 months need confirming', done: false }, { text: 'Four new stories have placeholders', done: false }] }),
+  base({ id: `${today}-eversana-intouch-vp-group-director-integrated-production`, company: 'EVERSANA INTOUCH', role: 'VP, Group Director, Integrated Production', location: 'New York, NY (remote)', comp: '$143,000 - $206,000 (employer range on the LinkedIn copy)', score: 4.1, source: 'gmail:linkedin', tier: 2,
+    reason: "Match 3.5 and seniority 5: runs the agency's production and post department (producers, MGFX, editors, vendors, estimates, workflow), which maps to the 200+ person team, $50M+ budget, and cloud editing build; the 15+ years of agency experience is the gap." }),
   base({ id: `${today}-vox-media-vp-head-of-podcast-gtm`, company: 'Vox Media', role: 'VP, Head of Podcast Go-To-Market', comp: '$175,000 - $250,000', score: 3.6, source: 'scan:greenhouse', tier: 1,
     reason: 'A NYC VP role running podcast ad partnerships and creative strategy, where your talent and creator deal work counts. Held back because you have not led ad sales.' }),
   base({ id: `${today}-openai-account-director-digital-native`, company: 'OpenAI', role: 'Account Director, Digital Native Enterprise', location: 'New York, NY (hybrid 3 days)', comp: '$234,900 - $290,000', score: 3.6, source: 'scan:ashby', tier: 2,
