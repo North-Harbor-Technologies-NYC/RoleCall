@@ -17,6 +17,7 @@ concurrency:
 
 jobs:
   scan:
+    if: github.repository != 'North-Harbor-Technologies-NYC/RoleCall'   # the template never scans; your fork does
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
