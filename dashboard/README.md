@@ -43,4 +43,4 @@ Sign in with the email and password above. No database needed.
 
 ## Deployments
 
-Only `main` deploys. `vercel.json` turns off automatic deployments for every `claude/**` branch (the routine pushes one per day for its run artifacts), and the ignore command skips any other preview that does not touch `dashboard/`. Keep the Neon integration's "create a branch for each preview deployment" option off: the free plan allows 10 database branches and each preview would consume one before the build step runs.
+Only `main` deploys. `vercel.json` turns off automatic deployments for every `claude/**` branch (the routine pushes one per day for its run artifacts); the ignore command skips the feed Action's daily `feed:` commits (they never touch the dashboard) and any preview that does not touch `dashboard/`. Every other commit to `main`, and any manual Redeploy, builds. Keep the Neon integration's "create a branch for each preview deployment" option off: the free plan allows 10 database branches and each preview would consume one before the build step runs.

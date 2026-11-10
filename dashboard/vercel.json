@@ -6,5 +6,5 @@
       "claude/**": false
     }
   },
-  "ignoreCommand": "if [ \"$VERCEL_ENV\" = \"production\" ]; then exit 1; fi; git diff --quiet HEAD^ HEAD -- . || exit 1; exit 0"
+  "ignoreCommand": "case \"$VERCEL_GIT_COMMIT_MESSAGE\" in feed:*) exit 0;; esac; if [ \"$VERCEL_ENV\" = \"production\" ]; then exit 1; fi; git diff --quiet HEAD^ HEAD -- . || exit 1; exit 0"
 }
